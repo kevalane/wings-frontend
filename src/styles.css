@@ -1,1 +1,39 @@
-/* You can add global styles to this file, and also import other style files */
+/* FONTS */
+@font-face {
+    font-family: FuturaPT;
+    src: url('assets/fonts/FuturaPTMedium.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: FuturaPT;
+    src: url('assets/fonts/FuturaPTBold.ttf');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: FuturaPT;
+    src: url('assets/fonts/FuturaPTLight.ttf');
+    font-weight: 200;
+    font-style: normal;
+}
+/* END FONTS */
+
+/* MAIN TEXT STYLES */
+p {
+    font-family: FuturaPT;
+    font-weight: 200;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: FuturaPT;
+}
+/* END MAIN TEXT STYLES */
+
+/* TOP LEVEL CSS ELEMENTS */
+section {
+    margin-bottom: 2em;
+}
+/* END TOP LEVEL CSS ELEMENTS */

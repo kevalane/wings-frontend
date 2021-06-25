@@ -1,0 +1,16 @@
+/* First headline */
+#firstSection {
+    margin-top: 4em;
+}
+
+#firstTitle {
+    padding: 1em 0em;
+    text-align: center;
+}
+/* End first headline */
+
+/* Second element, main image */
+#mainImage {
+    width: 100%;
+}
+/* End main image */
