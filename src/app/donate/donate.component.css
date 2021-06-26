@@ -1,0 +1,30 @@
+/* INFO */
+#firstSection {
+    margin-top: 4em;
+    text-align: center;
+}
+
+#mainTitle {
+    padding-top: 1em;
+    padding-bottom: .5em;
+}
+
+.heading {
+    padding-bottom: .5em;
+}
+/* END INFO */
+
+/* AUTOGIRO */
+#autogiro {
+    text-align: center;
+    padding-top: 1em;
+    padding-bottom: .5em;
+}
+
+.amountButton {
+    padding: .5em 2em;
+    margin-right: 2em;
+    margin-top: 2em;
+    border: 1px solid #b1b1b1;
+}
+/* END AUTOGIRO */

@@ -1,1 +1,53 @@
-<p>donate works!</p>
+<div class="container">
+
+    <!-- Information section -->
+    <section id="firstSection">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8 col-xxl-8 offset-lg-2 offset-xl-2 offset-xxl-2">
+                <hr>
+                <h2 id="mainTitle">Bidra till vårt arbete för mental hälsa.</h2>
+                <p>Vårt långsiktiga mål är att nå ut till Sverige samtliga gymnasieskolor och stärka ungdomarnas mentala hälsa.</p>
+                <p>För att uppnå vårt mål behöver vi din hjälp.</p>
+                <br><br>
+                <h2 class="text-center heading">Såhär kan du hjälpa oss:</h2>
+                <p><a href="donate#autogiro">Bli månadsgivare</a></p>
+
+                <p>Bidra via ditt företag genom att <a routerLink="/contact">kontakta oss</a> först.</p>
+
+                <p>Swisha valfritt belopp till 123 236 15 33.</p>
+                <br>
+                <hr>
+            </div>
+        </div>
+    </section>
+    <!-- END INFO -->
+
+    <!-- Monthly autogiro form -->
+    <section id="autogiroSection">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8 col-xxl-8 offset-lg-2 offset-xl-2 offset-xxl-2">
+                <h2 id="autogiro">Bli månadsgivare</h2>
+                <p>Våra månadsgivare är fundamentet i vår fortsatta verksamhet. Tack för att just Du väljer att stötta oss.</p>
+                <p>Nedan följer fullständiga instruktioner för att bli månadsgivare:</p>
+                <form id="donateForm" [formGroup]="donateForm">
+                    <br>
+                    <h4>1. Välj månadsbelopp</h4>
+                    <div id="buttonList">
+                        <button class="btn btn-default amountButton" (click)="changeAmount(100)">100</button>
+                        <button class="btn btn-default amountButton" (click)="changeAmount(200)">200</button>
+                        <button class="btn btn-default amountButton" (click)="changeAmount(500)">500</button>
+                        <button class="btn btn-default amountButton" (click)="toggleChoose()">Valfritt</button>
+                    </div>
+
+                    <!-- Invisible, choose  on your own -->
+                    <div *ngIf="chooseVisible">
+                        <p>Hello World</p>
+                    </div>
+                    <!-- End invisible -->
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- END AUTOGIRO -->
+
+</div>
