@@ -27,4 +27,22 @@
     margin-top: 2em;
     border: 1px solid #b1b1b1;
 }
+
+input {
+    width: 100%;
+    max-width: 40em;
+}
+
+label {
+    margin-bottom: .3em;
+    font-weight: 300;
+}
+
+.submitButton {
+    width: 100%;
+    max-width: 400px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 /* END AUTOGIRO */

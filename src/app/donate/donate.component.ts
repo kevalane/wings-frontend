@@ -10,6 +10,8 @@ export class DonateComponent implements OnInit {
 
   public donateForm: FormGroup;
   public chooseVisible: boolean;
+  public submitted: boolean;
+  public loading: boolean;
 
   constructor(private formBuilder: FormBuilder) {
     // Initiate form
@@ -21,9 +23,29 @@ export class DonateComponent implements OnInit {
     });
 
     this.chooseVisible = false;
+    this.submitted = false;
+    this.loading = false;
   }
 
   ngOnInit(): void {
+  }
+
+  public get f(): FormGroup['controls'] {
+    return this.donateForm.controls;
+  }
+
+  // Submit form
+  public submit(): void {
+    this.submitted = true;
+    this.loading = true;
+
+    if (this.donateForm.invalid) {
+      this.loading = false;
+      return;
+    }
+
+    console.log('hello');
+    
   }
 
   public changeAmount(amount: number): void {
