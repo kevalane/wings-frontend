@@ -33,15 +33,21 @@
                     <br>
                     <h4>1. Välj månadsbelopp</h4>
                     <div id="buttonList">
-                        <button class="btn btn-default amountButton" (click)="changeAmount(100)">100</button>
-                        <button class="btn btn-default amountButton" (click)="changeAmount(200)">200</button>
-                        <button class="btn btn-default amountButton" (click)="changeAmount(500)">500</button>
-                        <button class="btn btn-default amountButton" (click)="toggleChoose()">Valfritt</button>
+                        <button type="button" class="btn btn-default amountButton" (click)="changeAmount(100)" [ngClass]="{'isSelected': true}">100</button>
+                        <button type="button" class="btn btn-default amountButton" (click)="changeAmount(200)">200</button>
+                        <button type="button" class="btn btn-default amountButton" (click)="changeAmount(500)">500</button>
+                        <button type="button" class="btn btn-default amountButton" (click)="toggleChoose()">Valfritt</button>
                     </div>
 
                     <!-- Invisible, choose  on your own -->
                     <div *ngIf="chooseVisible">
-                        <p>Hello World</p>
+                        <br>
+                        <label>Valfritt månadsbelopp (SEK):</label>
+                        <input type="number" class="form-control numberInput" formControlName="amount" placeholder="0"
+                               [ngClass]="{'is-invalid': submitted && f.amount.errors}">
+                        <div *ngIf="submitted && f.amount.errors" class="invalid-feedback">
+                            <div *ngIf="f.amount.errors.required">Du måste fylla i ditt valfria belopp.</div>
+                        </div>
                     </div>
                     <!-- End invisible -->
                     <br><br>
@@ -52,8 +58,8 @@
                            [ngClass]="{'is-invalid' : submitted && f.ssn.errors}">
                     <div *ngIf="submitted && f.ssn.errors" class="invalid-feedback">
                         <div *ngIf="f.ssn.errors.required">Du måste fylla i ditt personnummer.</div>
-                        <div *ngIf="f.ssn.errors.minLength">Personnummer skall vara 12 siffror, format ÅÅÅÅMMDDXXXX.</div>
-                        <div *ngIf="f.ssn.errors.maxLength">Personnummer skall vara 12 siffror, format ÅÅÅÅMMDDXXXX.</div>
+                        <div *ngIf="f.ssn.errors?.minlength">Personnummer måste vara 12 siffror, format ÅÅÅÅMMDDXXXX.</div>
+                        <div *ngIf="f.ssn.errors?.maxlength">Personnummer måste vara 12 siffror, format ÅÅÅÅMMDDXXXX.</div>
                     </div>
                     <br>
                     <label for="email">Email:</label>
@@ -70,7 +76,7 @@
                         <option value="OEB">Danske Bank</option>
                         <option value="SHB">Handelsbanken</option>
                         <option value="ICA">ICA Banken</option>
-                        <option value="LFB">Länsförsäkrningar</option>
+                        <option value="LFB">Länsförsäkringar</option>
                         <option value="NB">Nordea</option>
                         <option value="SBAB">SBAB</option>
                         <option value="SEB">SEB</option>
