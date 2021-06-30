@@ -15,13 +15,16 @@ const httpOptions = {
 export class HttpService {
 
   private configUrl: string;
+  private autogiroUrl: string;
 
   constructor(private http: HttpClient) {
     this.configUrl = "/api/";
+    this.autogiroUrl = "autogiro/"
   }
 
+  // Post the bank info from autogiro form and return the bank info
   public getBankInfo(_amount: number, _ssn: string, _email: string, _bank: string): Observable<any> {
-    return this.http.post(this.configUrl + 'getBankInfo', {amount: _amount, ssn: _ssn, email: _email, bank: _bank}, httpOptions).pipe(
+    return this.http.post(this.configUrl + this.autogiroUrl + 'getBankInfo', {amount: _amount, ssn: _ssn, email: _email, bank: _bank}, httpOptions).pipe(
       catchError(this.handleError)
     )
   }
