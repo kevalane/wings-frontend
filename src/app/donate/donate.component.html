@@ -47,6 +47,7 @@
                                [ngClass]="{'is-invalid': submitted && f.amount.errors}">
                         <div *ngIf="submitted && f.amount.errors" class="invalid-feedback">
                             <div *ngIf="f.amount.errors.required">Du måste fylla i ditt valfria belopp.</div>
+                            <div *ngIf="f.amount.errors.min">Minsta månadsbelopp är 50 SEK.</div>
                         </div>
                     </div>
                     <!-- End invisible -->
@@ -60,6 +61,7 @@
                         <div *ngIf="f.ssn.errors.required">Du måste fylla i ditt personnummer.</div>
                         <div *ngIf="f.ssn.errors?.minlength">Personnummer måste vara 12 siffror, format ÅÅÅÅMMDDXXXX.</div>
                         <div *ngIf="f.ssn.errors?.maxlength">Personnummer måste vara 12 siffror, format ÅÅÅÅMMDDXXXX.</div>
+                        <div *ngIf="f.ssn.errors.pattern">Personnumret skall endast bestå av siffror.</div>
                     </div>
                     <br>
                     <label for="email">Email:</label>
@@ -70,7 +72,7 @@
                     </div>
                     <br>
                     <label>Välj din bank:</label>
-                    <select id="bank" name="bank" class="form-select" formControlName="ssn"
+                    <select id="bank" name="bank" class="form-select" formControlName="bank"
                             [ngClass]="{'is-invalid': submitted && f.bank.errors}">
                         <option value="" selected disabled hidden>Välj din bank</option>
                         <option value="OEB">Danske Bank</option>

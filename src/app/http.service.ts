@@ -20,8 +20,8 @@ export class HttpService {
     this.configUrl = "/api/";
   }
 
-  public getBankInfo(): Observable<any> {
-    return this.http.post(this.configUrl + '', httpOptions).pipe(
+  public getBankInfo(_amount: number, _ssn: string, _email: string, _bank: string): Observable<any> {
+    return this.http.post(this.configUrl + 'getBankInfo', {amount: _amount, ssn: _ssn, email: _email, bank: _bank}, httpOptions).pipe(
       catchError(this.handleError)
     )
   }
