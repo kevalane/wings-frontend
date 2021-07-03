@@ -92,6 +92,9 @@
                     </div>
                     <br><br>
                     <button action="submit" class="btn btn-primary submitButton">Hämta kontouppgifter</button>
+                    <br><br>
+                    <div class="alert alert-danger" *ngIf="success == false && message">{{message}}</div>
+                    <div class="alert alert-success" *ngIf="success == true && message">{{message}}</div>
                 </form>
             </div>
         </div>

@@ -14,6 +14,8 @@ export class DonateComponent implements OnInit {
   public submitted: boolean;
   public loading: boolean;
   private donateSub: any;
+  public success: boolean;
+  public message: string;
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpService) {
@@ -28,13 +30,17 @@ export class DonateComponent implements OnInit {
     this.chooseVisible = false;
     this.submitted = false;
     this.loading = false;
+    this.success = false;
+    this.message = "";
   }
 
   ngOnInit(): void {
   }
 
   ngOnDestroy(): void {
-
+    if (this.donateSub) {
+      this.donateSub.unsubscribe();
+    }
   }
 
   public get f(): FormGroup['controls'] {
@@ -48,9 +54,6 @@ export class DonateComponent implements OnInit {
     this.loading = true;
 
     if (this.donateForm.invalid) {
-      console.log(this.f.ssn.errors);
-      console.log(this.f.email.errors);
-      console.log(this.f.bank.errors);
       this.loading = false;
       return;
     }
@@ -62,7 +65,17 @@ export class DonateComponent implements OnInit {
       this.donateForm.controls['ssn'].value,
       this.donateForm.controls['email'].value,
       this.donateForm.controls['bank'].value).subscribe(data => {
-        console.log(data);
+        this.loading = false;
+        if (data['success']) {
+          this.success = true;
+          this.message = data['msg'];
+        } else if (data['err']) {
+          this.success = false;
+          this.message = data['err'];
+        } else {
+          this.success = false;
+          this.message = "Unknown error.";
+        }
     })
     
   }
