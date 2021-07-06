@@ -29,6 +29,13 @@ export class HttpService {
     )
   }
 
+  // Poll for bank info
+  public pollBankInfo(_publicId: string): Observable<any> {
+    return this.http.post(this.configUrl + this.autogiroUrl + 'pollBankInfo', {publicId: _publicId}, httpOptions).pipe(
+      catchError(this.handleError)
+    )
+  }
+
   // Error handler
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {

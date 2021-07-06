@@ -13,9 +13,12 @@ export class DonateComponent implements OnInit {
   public chooseVisible: boolean;
   public submitted: boolean;
   public loading: boolean;
-  private donateSub: any;
   public success: boolean;
   public message: string;
+
+  // Subs
+  private donateSub: any;
+  private pollSub: any;
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpService) {
@@ -40,6 +43,10 @@ export class DonateComponent implements OnInit {
   ngOnDestroy(): void {
     if (this.donateSub) {
       this.donateSub.unsubscribe();
+    }
+
+    if (this.pollSub) {
+      this.pollSub.unsubscribe();
     }
   }
 
@@ -69,6 +76,8 @@ export class DonateComponent implements OnInit {
         if (data['success']) {
           this.success = true;
           this.message = data['msg'];
+          // Here we need to start the polling
+          this.poll(data['msg']);
         } else if (data['err']) {
           this.success = false;
           this.message = data['err'];
@@ -78,6 +87,21 @@ export class DonateComponent implements OnInit {
         }
     })
     
+  }
+
+  private poll(publicId: string): void {
+    this.http.pollBankInfo(publicId).subscribe(data => {
+      if (data['success']) {
+        this.success = true;
+        this.message = data['accounts'];
+      } else if (data['err']) {
+        this.success = false;
+        this.message = data['err'];
+      } else {
+        this.success = false;
+        this.message = 'Unknown error.';
+      }
+    })
   }
 
   // Change the amount to donate manually
