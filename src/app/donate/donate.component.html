@@ -33,10 +33,10 @@
                     <br>
                     <h4>1. Välj månadsbelopp</h4>
                     <div id="buttonList">
-                        <button type="button" class="btn btn-default amountButton" (click)="changeAmount(100)" [ngClass]="{'isSelected': true}">100</button>
-                        <button type="button" class="btn btn-default amountButton" (click)="changeAmount(200)">200</button>
-                        <button type="button" class="btn btn-default amountButton" (click)="changeAmount(500)">500</button>
-                        <button type="button" class="btn btn-default amountButton" (click)="toggleChoose()">Valfritt</button>
+                        <button type="button" class="btn btn-default amountButton shadow-none" (click)="changeAmount(100)" [ngClass]="{'isSelected': f.amount.value == 100 && !chooseVisible}">100</button>
+                        <button type="button" class="btn btn-default amountButton shadow-none" (click)="changeAmount(200)" [ngClass]="{'isSelected': f.amount.value == 200 && !chooseVisible}">200</button>
+                        <button type="button" class="btn btn-default amountButton shadow-none" (click)="changeAmount(500)" [ngClass]="{'isSelected': f.amount.value == 500 && !chooseVisible}">500</button>
+                        <button type="button" class="btn btn-default amountButton shadow-none" (click)="toggleChoose()" [ngClass]="{'isSelected': chooseVisible}">Valfritt</button>
                     </div>
 
                     <!-- Invisible, choose  on your own -->
@@ -54,7 +54,7 @@
                 
                     <div *ngIf="!chooseVisible">
                         <div *ngIf="submitted && f.amount.errors">
-                            <div *ngIf="f.amount.errors.required" class="invalid">Du måste välja ett månadsbelopp.</div>
+                            <div class="invalid">Du måste välja ett månadsbelopp.</div>
                         </div>
                     </div>
 
@@ -81,7 +81,7 @@
                     <label>Välj din bank:</label>
                     <select id="bank" name="bank" class="form-select" formControlName="bank"
                             [ngClass]="{'is-invalid': submitted && f.bank.errors}">
-                        <option value="" selected disabled hidden>Välj din bank</option>
+                        <option value="" selected disabled>Välj din bank</option>
                         <option value="OEB">Danske Bank</option>
                         <option value="SHB">Handelsbanken</option>
                         <option value="ICA">ICA Banken</option>
@@ -103,8 +103,12 @@
                         <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     </button>
                     <br><br>
-                    <div class="alert alert-danger" *ngIf="success == false && message">{{message}}</div>
-                    <div class="alert alert-success" *ngIf="success == true && message">{{message}}</div>
+                    <!-- QR -->
+                    <p *ngIf="qr" class="text-center">Psst! Du kan även använda QR-koden, om det behövs:</p>
+                    <img *ngIf="qr" [src]="sanitize(qr)" id="qr">
+                    <!-- END QR -->
+                    <div class="alert alert-danger" *ngIf="success == false && message">{{message}} <span *ngIf="loadingBankid" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></div>
+                    <div class="alert alert-success" *ngIf="success == true && message">{{message}} <span *ngIf="loadingBankid" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></div>
                 </form>
                 <!-- Step 3 -->
                 <br><br>

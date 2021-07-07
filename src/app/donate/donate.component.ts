@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from '../http.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-donate',
@@ -13,17 +14,20 @@ export class DonateComponent implements OnInit {
   public chooseVisible: boolean;
   public submitted: boolean;
   public loading: boolean;
+  public loadingBankid: boolean;
   public success: boolean;
   public message: string;
   public accounts: any;
   public legit: boolean;
+  public qr: string;
 
   // Subs
   private donateSub: any;
   private pollSub: any;
 
   constructor(private formBuilder: FormBuilder,
-              private http: HttpService) {
+              private http: HttpService,
+              private sanitizer: DomSanitizer) {
     // Initiate form
     this.donateForm = this.formBuilder.group({
       amount: ['', [Validators.required, Validators.min(50)]],
@@ -35,9 +39,11 @@ export class DonateComponent implements OnInit {
     this.chooseVisible = false;
     this.submitted = false;
     this.loading = false;
+    this.loadingBankid = false;
     this.success = false;
     this.message = "";
     this.legit = false;
+    this.qr = '';
   }
 
   ngOnInit(): void {
@@ -79,6 +85,7 @@ export class DonateComponent implements OnInit {
         if (data['success']) {
           this.success = true;
           this.message = 'Öppna Mobilt BankID och legitimera dig';
+          this.loadingBankid = true;
           // Here we need to start the polling
           this.poll(data['msg']);
         } else if (data['err']) {
@@ -94,7 +101,12 @@ export class DonateComponent implements OnInit {
 
   private poll(publicId: string): void {
     this.http.pollBankInfo(publicId).subscribe(data => {
-      if (data['success']) {
+      this.loadingBankid = false;
+      if (data['qr'] && data['status'] == 'Waiting') {
+        this.loadingBankid = true;
+        this.qr = data['qr'];
+        this.poll(data['publicId']);
+      } else if (data['success']) {
         this.success = true;
         this.message = 'Legitimeringen lyckades. Välj konton nedan:';
         this.legit = true;
@@ -118,6 +130,11 @@ export class DonateComponent implements OnInit {
   // Show the optional monthly amount
   public toggleChoose(): void {
     this.chooseVisible = !this.chooseVisible;
+  }
+
+  // Sanitize
+  public sanitize(url: string) {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
 }
