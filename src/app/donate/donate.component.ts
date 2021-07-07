@@ -15,6 +15,8 @@ export class DonateComponent implements OnInit {
   public loading: boolean;
   public success: boolean;
   public message: string;
+  public accounts: any;
+  public legit: boolean;
 
   // Subs
   private donateSub: any;
@@ -25,7 +27,7 @@ export class DonateComponent implements OnInit {
     // Initiate form
     this.donateForm = this.formBuilder.group({
       amount: ['', [Validators.required, Validators.min(50)]],
-      ssn: ['', [Validators.required, Validators.minLength(12), Validators.maxLength(12), Validators.pattern("^[0-9]*$")]],
+      ssn: ['', [Validators.required, Validators.minLength(12), Validators.maxLength(13)]],
       email: ['', Validators.required],
       bank: ['', Validators.required]
     });
@@ -35,6 +37,7 @@ export class DonateComponent implements OnInit {
     this.loading = false;
     this.success = false;
     this.message = "";
+    this.legit = false;
   }
 
   ngOnInit(): void {
@@ -75,7 +78,7 @@ export class DonateComponent implements OnInit {
         this.loading = false;
         if (data['success']) {
           this.success = true;
-          this.message = data['msg'];
+          this.message = 'Öppna Mobilt BankID och legitimera dig';
           // Here we need to start the polling
           this.poll(data['msg']);
         } else if (data['err']) {
@@ -93,7 +96,10 @@ export class DonateComponent implements OnInit {
     this.http.pollBankInfo(publicId).subscribe(data => {
       if (data['success']) {
         this.success = true;
-        this.message = data['accounts'];
+        this.message = 'Legitimeringen lyckades. Välj konton nedan:';
+        this.legit = true;
+        this.accounts = data['accounts'];
+        console.log(this.accounts)
       } else if (data['err']) {
         this.success = false;
         this.message = data['err'];

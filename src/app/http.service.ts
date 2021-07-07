@@ -19,7 +19,7 @@ export class HttpService {
 
   constructor(private http: HttpClient) {
     this.configUrl = "/api/";
-    this.autogiroUrl = "autogiro/"
+    this.autogiroUrl = "autogiro/";
   }
 
   // Post the bank info from autogiro form and return the bank info

@@ -51,16 +51,23 @@
                         </div>
                     </div>
                     <!-- End invisible -->
+                
+                    <div *ngIf="!chooseVisible">
+                        <div *ngIf="submitted && f.amount.errors">
+                            <div *ngIf="f.amount.errors.required" class="invalid">Du måste välja ett månadsbelopp.</div>
+                        </div>
+                    </div>
+
                     <br><br>
                     <h4>2. Dina uppgifter</h4>
                     <br>
                     <label for="ssn">Personnummer:</label>
-                    <input type="text" class="form-control input" formControlName="ssn" id="ssn" placeholder="ÅÅÅÅMMDDXXXX"
+                    <input type="text" class="form-control input" formControlName="ssn" id="ssn" placeholder="ÅÅÅÅMMDD-XXXX"
                            [ngClass]="{'is-invalid' : submitted && f.ssn.errors}">
                     <div *ngIf="submitted && f.ssn.errors" class="invalid-feedback">
                         <div *ngIf="f.ssn.errors.required">Du måste fylla i ditt personnummer.</div>
-                        <div *ngIf="f.ssn.errors?.minlength">Personnummer måste vara 12 siffror, format ÅÅÅÅMMDDXXXX.</div>
-                        <div *ngIf="f.ssn.errors?.maxlength">Personnummer måste vara 12 siffror, format ÅÅÅÅMMDDXXXX.</div>
+                        <div *ngIf="f.ssn.errors?.minlength">Personnummer måste vara 12 siffror, format ÅÅÅÅMMDD-XXXX.</div>
+                        <div *ngIf="f.ssn.errors?.maxlength">Personnummer måste vara 12 siffror, format ÅÅÅÅMMDD-XXXX.</div>
                         <div *ngIf="f.ssn.errors.pattern">Personnumret skall endast bestå av siffror.</div>
                     </div>
                     <br>
@@ -91,11 +98,44 @@
                         <div *ngIf="f.bank.errors.required">Du måste fylla i din bank.</div>
                     </div>
                     <br><br>
-                    <button action="submit" class="btn btn-primary submitButton">Hämta kontouppgifter</button>
+                    <button action="submit" class="btn btn-primary submitButton">
+                        Hämta kontouppgifter
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    </button>
                     <br><br>
                     <div class="alert alert-danger" *ngIf="success == false && message">{{message}}</div>
                     <div class="alert alert-success" *ngIf="success == true && message">{{message}}</div>
                 </form>
+                <!-- Step 3 -->
+                <br><br>
+                <div id="step3" *ngIf="legit">
+                    <h4>3. Välj konto</h4>
+                    <p>Nedan följer dem konton vi lyckades hitta. Autogirokompabilitet är endast vad vi lyckades hitta
+                    och måste inte alltid stämma överens med verkligheten. Välj vilket konto som helst som du vet att
+                    autogiro är tillgängligt för.</p>
+                    <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">Clearingnr</th>
+                            <th scope="col">Kontonr</th>
+                            <th scope="col">Kontonamn</th>
+                            <th scope="col">Autogirokompatibelt</th>
+                            <th scope="col">Använd</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let account of accounts">
+                                <th>{{account.ClearingNo}}</th>
+                                <th>{{account.AccountNo}}</th>
+                                <th>{{account.Name}}</th>
+                                <th *ngIf="account.AutogiroCompatible != 'Approved'">Okänt</th>
+                                <th *ngIf="account.AutogiroCompatible == 'Approved'">Ja</th>
+                                <th><button class="btn btn-primary">Använd</button></th>
+                            </tr>
+                        </tbody>
+                      </table>
+                </div>
+                <!-- End step 3 -->
             </div>
         </div>
     </section>
