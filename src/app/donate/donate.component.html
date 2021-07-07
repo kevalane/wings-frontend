@@ -128,18 +128,23 @@
                           </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let account of accounts">
+                            <tr *ngFor="let account of accounts; let i = index;">
                                 <th>{{account.ClearingNo}}</th>
                                 <th>{{account.AccountNo}}</th>
                                 <th>{{account.Name}}</th>
                                 <th *ngIf="account.AutogiroCompatible != 'Approved'">Okänt</th>
                                 <th *ngIf="account.AutogiroCompatible == 'Approved'">Ja</th>
-                                <th><button class="btn btn-primary">Använd</button></th>
+                                <th><button class="btn btn-primary" (click)="startAutogiro(account.ClearingNo, account.AccountNo, account.HolderName, i)">Använd
+                                    <span *ngIf="loadingStart && i == selectedIndex" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                </button></th>
                             </tr>
                         </tbody>
                       </table>
                 </div>
                 <!-- End step 3 -->
+                <br><br>
+                <div class="alert alert-danger" *ngIf="autogiroSuccess == false && autogiroMessage">{{autogiroMessage}}</div>
+                <div class="alert alert-success" *ngIf="autogiroSuccess == true && autogiroMessage">{{autogiroMessage}}</div>
             </div>
         </div>
     </section>

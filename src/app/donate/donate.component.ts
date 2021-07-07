@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from '../http.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Autogiro } from '../autogiro';
 
 @Component({
   selector: 'app-donate',
@@ -15,15 +16,20 @@ export class DonateComponent implements OnInit {
   public submitted: boolean;
   public loading: boolean;
   public loadingBankid: boolean;
+  public loadingStart: boolean;
   public success: boolean;
   public message: string;
   public accounts: any;
   public legit: boolean;
   public qr: string;
+  public selectedIndex: number;
+  public autogiroSuccess: boolean;
+  public autogiroMessage: string;
 
   // Subs
   private donateSub: any;
   private pollSub: any;
+  private startSub: any;
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpService,
@@ -40,22 +46,31 @@ export class DonateComponent implements OnInit {
     this.submitted = false;
     this.loading = false;
     this.loadingBankid = false;
+    this.loadingStart = false;
     this.success = false;
     this.message = "";
     this.legit = false;
     this.qr = '';
+    this.selectedIndex = -1;
+    this.autogiroMessage = '';
+    this.autogiroSuccess = false;
   }
 
   ngOnInit(): void {
   }
 
   ngOnDestroy(): void {
+    // Unsubscribe from all subs on destroy
     if (this.donateSub) {
       this.donateSub.unsubscribe();
     }
 
     if (this.pollSub) {
       this.pollSub.unsubscribe();
+    }
+
+    if (this.startSub) {
+      this.startSub.unsubscribe();
     }
   }
 
@@ -120,6 +135,37 @@ export class DonateComponent implements OnInit {
         this.message = 'Unknown error.';
       }
     })
+  }
+
+  // Actually start the autogiro
+  public startAutogiro(clearingNumber: string, accountNumber: string, holderName: string, index: number): void {
+    this.selectedIndex = index;
+    this.loadingStart = true;
+
+    const autogiro: Autogiro = {
+      email: this.f.email.value,
+      ssn: this.f.ssn.value,
+      name: holderName,
+      clearingNumber: clearingNumber,
+      accountNumber: accountNumber,
+      bank: this.f.bank.value,
+      amount: this.f.amount.value
+    }
+
+    this.startSub = this.http.startAutogiro(autogiro).subscribe(data => {
+      this.loadingStart = false;
+      console.log(data);
+      if (data['success']) {
+        this.autogiroMessage = 'Registreringen lyckades. Tack för att just Du blivit månadsgivare.';
+        this.autogiroSuccess = true;
+      } else if (data['err']) {
+        this.autogiroMessage = 'Registreringen misslyckades. Försök igen eller kontakta oss så hjälper vi dig!';
+        this.autogiroSuccess = false;
+      } else {
+        this.autogiroSuccess = false;
+        this.autogiroMessage = 'Ett okänt fel inträffande när vi skulle registrera dig som månadsgivare. Vänligen kontakta oss så löser vi detta.';
+      }
+    });
   }
 
   // Change the amount to donate manually

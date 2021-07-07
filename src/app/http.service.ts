@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Autogiro } from './autogiro';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -32,6 +33,13 @@ export class HttpService {
   // Poll for bank info
   public pollBankInfo(_publicId: string): Observable<any> {
     return this.http.post(this.configUrl + this.autogiroUrl + 'pollBankInfo', {publicId: _publicId}, httpOptions).pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  // Start the autogiro
+  public startAutogiro(autogiro: Autogiro): Observable<any> {
+    return this.http.post<any>(this.configUrl + this.autogiroUrl + 'startAutogiro', autogiro, httpOptions).pipe(
       catchError(this.handleError)
     )
   }
