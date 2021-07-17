@@ -3,8 +3,9 @@
     margin-top: 4em;
 }
 
-#firstTitle {
-    padding: 1em 0em;
+#homeTitle {
+    margin-top: 5rem;
+    margin-bottom: 1rem;
     text-align: center;
 }
 /* End first headline */
