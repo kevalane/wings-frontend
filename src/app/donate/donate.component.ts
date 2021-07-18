@@ -3,11 +3,34 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from '../http.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Autogiro } from '../autogiro';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-donate',
   templateUrl: './donate.component.html',
-  styleUrls: ['./donate.component.css']
+  styleUrls: ['./donate.component.css'],
+  animations: [
+    trigger('slideInOutAnimation', [
+      state('*', style({
+      })),
+      transition(':enter', [
+        style({
+          height: 0,
+          opacity: 0
+        }),
+        animate('.3s ease-out', style({
+          height: '90.8px',
+          opacity: 1
+        }))
+      ]),
+      transition(':leave', [
+        animate('.3s ease-in', style({
+          height: 0,
+          opacity: 0
+        }))
+      ])
+    ])
+  ]
 })
 export class DonateComponent implements OnInit {
 

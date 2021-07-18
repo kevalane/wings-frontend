@@ -13,11 +13,11 @@
                         <button type="button" class="btn btn-default amountButton shadow-none" (click)="changeAmount(100)" [ngClass]="{'isSelected': f.amount.value == 100 && !chooseVisible}">100</button>
                         <button type="button" class="btn btn-default amountButton shadow-none" (click)="changeAmount(200)" [ngClass]="{'isSelected': f.amount.value == 200 && !chooseVisible}">200</button>
                         <button type="button" class="btn btn-default amountButton shadow-none" (click)="changeAmount(500)" [ngClass]="{'isSelected': f.amount.value == 500 && !chooseVisible}">500</button>
-                        <button type="button" class="btn btn-default amountButton shadow-none" (click)="toggleChoose()" [ngClass]="{'isSelected': chooseVisible}">Valfritt</button>
+                        <button type="button" class="btn btn-default amountButton shadow-none" (click)="toggleChoose()" [ngClass]="{'isSelected': chooseVisible}" style="margin-right: 0;">Valfritt</button>
                     </div>
 
                     <!-- Invisible, choose  on your own -->
-                    <div *ngIf="chooseVisible">
+                    <div *ngIf="chooseVisible" @slideInOutAnimation>
                         <br>
                         <label>Valfritt månadsbelopp (SEK):</label>
                         <input type="number" class="form-control numberInput" formControlName="amount" placeholder="0"
@@ -31,7 +31,8 @@
                 
                     <div *ngIf="!chooseVisible">
                         <div *ngIf="submitted && f.amount.errors">
-                            <div class="invalid">Du måste välja ett månadsbelopp.</div>
+                            <div *ngIf="f.amount.errors.required" class="invalid">Du måste välja ett månadsbelopp.</div>
+                            <div *ngIf="f.amount.errors.min" class="invalid">Minsta månadsbelopp är 50 SEK.</div>
                         </div>
                     </div>
 
