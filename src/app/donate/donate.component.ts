@@ -48,6 +48,8 @@ export class DonateComponent implements OnInit {
   public selectedIndex: number;
   public autogiroSuccess: boolean;
   public autogiroMessage: string;
+  public disabled: boolean;
+  public disabledAcc: boolean;
 
   // Subs
   private donateSub: any;
@@ -77,6 +79,8 @@ export class DonateComponent implements OnInit {
     this.selectedIndex = -1;
     this.autogiroMessage = '';
     this.autogiroSuccess = false;
+    this.disabled = false;
+    this.disabledAcc = false;
   }
 
   ngOnInit(): void {
@@ -121,6 +125,7 @@ export class DonateComponent implements OnInit {
       this.donateForm.controls['bank'].value).subscribe(data => {
         this.loading = false;
         if (data['success']) {
+          this.disabled = true;
           this.success = true;
           this.message = 'Öppna Mobilt BankID och legitimera dig';
           this.loadingBankid = true;
@@ -145,15 +150,19 @@ export class DonateComponent implements OnInit {
         this.qr = data['qr'];
         this.poll(data['publicId']);
       } else if (data['success']) {
+        this.qr = '';
         this.success = true;
         this.message = 'Legitimeringen lyckades. Välj konton nedan:';
         this.legit = true;
         this.accounts = data['accounts'];
-        console.log(this.accounts)
       } else if (data['err']) {
+        this.disabled = false;
+        this.qr = '';
         this.success = false;
         this.message = data['err'];
       } else {
+        this.disabled = false;
+        this.qr = '';
         this.success = false;
         this.message = 'Unknown error.';
       }
@@ -177,14 +186,17 @@ export class DonateComponent implements OnInit {
 
     this.startSub = this.http.startAutogiro(autogiro).subscribe(data => {
       this.loadingStart = false;
-      console.log(data);
+      this.disabledAcc = true;
       if (data['success']) {
-        this.autogiroMessage = 'Registreringen lyckades. Tack för att just Du blivit månadsgivare.';
+        this.disabledAcc = true;
+        this.autogiroMessage = 'Registreringen lyckades. Tack för att just Du blivit månadsgivare. Du kan nu stänga sidan.';
         this.autogiroSuccess = true;
       } else if (data['err']) {
+        this.disabledAcc = false;
         this.autogiroMessage = 'Registreringen misslyckades. Försök igen eller kontakta oss så hjälper vi dig!';
         this.autogiroSuccess = false;
       } else {
+        this.disabledAcc = false;
         this.autogiroSuccess = false;
         this.autogiroMessage = 'Ett okänt fel inträffande när vi skulle registrera dig som månadsgivare. Vänligen kontakta oss så löser vi detta.';
       }

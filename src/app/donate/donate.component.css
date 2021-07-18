@@ -1,4 +1,8 @@
 /* AUTOGIRO */
+#autogiroSection {
+    margin-top: 2rem;
+}
+
 .isSelected {
     border: 2px solid #0d6efd !important;
     margin: -2px;
@@ -13,6 +17,7 @@
 .numberInput {
     width: 46.666%;
     min-width: 100px;
+    padding: .7rem 1rem;
 }
 #autogiro {
     text-align: center;
@@ -56,8 +61,9 @@ label {
 }
 
 .submitButton {
-    width: 100%;
-    max-width: 400px;
+    /* width: 100%; */
+    /* max-width: 400px; */
+    padding: .7rem 1rem;
     display: block;
     margin-left: auto;
     margin-right: auto;

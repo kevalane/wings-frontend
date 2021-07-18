@@ -76,21 +76,21 @@
                         <div *ngIf="f.bank.errors.required">Du måste fylla i din bank.</div>
                     </div>
                     <br><br>
-                    <button action="submit" class="btn btn-primary submitButton">
+                    <button action="submit" class="btn btn-primary submitButton" [disabled]="disabled">
                         Hämta kontouppgifter
                         <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     </button>
                     <br><br>
                     <!-- QR -->
-                    <p *ngIf="qr" class="text-center">Psst! Du kan även använda QR-koden, om det behövs:</p>
-                    <img *ngIf="qr" [src]="sanitize(qr)" id="qr">
+                    <p *ngIf="qr" class="text-center" @slideInOutAnimation>Psst! Du kan även använda QR-koden, om det behövs:</p>
+                    <img *ngIf="qr" [src]="sanitize(qr)" id="qr" @slideInOutAnimation>
                     <!-- END QR -->
                     <div class="alert alert-danger" *ngIf="success == false && message">{{message}} <span *ngIf="loadingBankid" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></div>
                     <div class="alert alert-success" *ngIf="success == true && message">{{message}} <span *ngIf="loadingBankid" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></div>
                 </form>
                 <!-- Step 3 -->
                 <br><br>
-                <div id="step3" *ngIf="legit">
+                <div id="step3" *ngIf="legit" @slideInOutAnimation>
                     <h4>3. Välj konto</h4>
                     <p>Nedan följer dem konton vi lyckades hitta. Autogirokompabilitet är endast vad vi lyckades hitta
                     och måste inte alltid stämma överens med verkligheten. Välj vilket konto som helst som du vet att
@@ -112,7 +112,7 @@
                                 <th>{{account.Name}}</th>
                                 <th *ngIf="account.AutogiroCompatible != 'Approved'">Okänt</th>
                                 <th *ngIf="account.AutogiroCompatible == 'Approved'">Ja</th>
-                                <th><button class="btn btn-primary" (click)="startAutogiro(account.ClearingNo, account.AccountNo, account.HolderName, i)">Använd
+                                <th><button class="btn btn-primary" (click)="startAutogiro(account.ClearingNo, account.AccountNo, account.HolderName, i)" [disabled]="disabledAcc">Använd
                                     <span *ngIf="loadingStart && i == selectedIndex" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 </button></th>
                             </tr>
