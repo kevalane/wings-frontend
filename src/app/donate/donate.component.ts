@@ -4,6 +4,7 @@ import { HttpService } from '../http.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Autogiro } from '../autogiro';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-donate',
@@ -143,24 +144,40 @@ export class DonateComponent implements OnInit {
   }
 
   private poll(publicId: string): void {
-    this.http.pollBankInfo(publicId).subscribe(data => {
+    console.log('CALLED');
+    this.pollSub = this.http.pollBankInfo(publicId).subscribe(data => {
+      console.log(data);
       this.loadingBankid = false;
       if (data['qr'] && data['status'] == 'Waiting') {
+        // Recursive call WITH QR
         this.loadingBankid = true;
         this.qr = data['qr'];
-        this.poll(data['publicId']);
+        this.pollSub.unsubscribe();
+        timer(1000).subscribe(x => {
+          this.poll(data['publicId']);
+        });
+      } else if (data['status'] == 'Waiting') {
+        // Recursive call WITHOUT QR
+        this.loadingBankid = true;
+        this.pollSub.unsubscribe();
+        timer(1000).subscribe(x => {
+          this.poll(data['publicId']);
+        });
       } else if (data['success']) {
+        // When we succeeded
         this.qr = '';
         this.success = true;
         this.message = 'Legitimeringen lyckades. Välj konton nedan:';
         this.legit = true;
         this.accounts = data['accounts'];
       } else if (data['err']) {
+        // If just an error
         this.disabled = false;
         this.qr = '';
         this.success = false;
         this.message = data['err'];
       } else {
+        // Catch unknown errors
         this.disabled = false;
         this.qr = '';
         this.success = false;

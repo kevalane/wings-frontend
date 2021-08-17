@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { HttpService } from '../http.service';
 
 @Component({
@@ -8,10 +9,22 @@ import { HttpService } from '../http.service';
 })
 export class CancelComponent implements OnInit {
 
+  private cancelSub: Subscription | undefined;
+
   constructor(private http: HttpService) { }
 
   ngOnInit(): void {
-    this.http.getTest().subscribe(data => {
+    this.submit();
+  }
+
+  ngOnDestroy(): void {
+    if (this.cancelSub) {
+      this.cancelSub.unsubscribe();
+    }
+  }
+
+  public submit(): void {
+    this.cancelSub = this.http.cancelAutogiro("kevin.rasmusson@hotmail.com").subscribe(data => {
       console.log(data);
     }, err => {
       console.log(err);
