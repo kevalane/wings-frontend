@@ -17,10 +17,12 @@ export class HttpService {
 
   private configUrl: string;
   private autogiroUrl: string;
+  private cancelUrl: string;
 
   constructor(private http: HttpClient) {
     this.configUrl = "/api/";
     this.autogiroUrl = "autogiro/";
+    this.cancelUrl = "cancel/";
   }
 
   // Post the bank info from autogiro form and return the bank info
@@ -44,20 +46,24 @@ export class HttpService {
     )
   }
 
+  // Test route for cancel
+  public getTest(): Observable<any> {
+    return this.http.get<any>(this.configUrl + this.cancelUrl + 'getTest', httpOptions).pipe(
+      catchError(this.handleError)
+    )
+  }
+
   // Error handler
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error);
+      return throwError(
+        'Client error occured.'
+      );
     } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
+      console.log(error.error);
+      return throwError(
+        'Back-end returned code (' + error.status + ') with message: ' + error.error.err
+      )
     }
-    // Return an observable with a user-facing error message.
-    return throwError(
-      'Something bad happened; please try again later.');
   }
 }

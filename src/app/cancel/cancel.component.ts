@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from '../http.service';
 
 @Component({
   selector: 'app-cancel',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CancelComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpService) { }
 
   ngOnInit(): void {
+    this.http.getTest().subscribe(data => {
+      console.log(data);
+    }, err => {
+      console.log(err);
+    })
   }
 
 }
