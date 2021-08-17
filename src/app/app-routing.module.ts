@@ -21,7 +21,8 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent
-  }
+  },
+  { path: 'cancel', loadChildren: () => import('./cancel/cancel.module').then(m => m.CancelModule) }
 ];
 
 @NgModule({
