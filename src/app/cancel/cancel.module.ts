@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { CancelRoutingModule } from './cancel-routing.module';
 import { CancelComponent } from './cancel.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { CancelComponent } from './cancel.component';
   ],
   imports: [
     CommonModule,
-    CancelRoutingModule
+    CancelRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class CancelModule { }
