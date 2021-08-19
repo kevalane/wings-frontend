@@ -1,0 +1,14 @@
+#cancelTitle { 
+    margin-top: 5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.submitButton {
+    width: 50%;
+    min-width: 10rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 1.5rem;
+}
