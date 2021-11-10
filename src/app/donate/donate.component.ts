@@ -234,7 +234,6 @@ export class DonateComponent implements OnInit {
     if (this.chooseVisible) {
       this.donateForm.controls.amount.updateValueAndValidity();
     }
-    console.log(this.f.amount.errors!.min);
   }
 
   // Sanitize
