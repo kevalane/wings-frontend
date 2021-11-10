@@ -62,6 +62,12 @@ p {
     font-size: 1rem;
 }
 
+label {
+    font-family: Raleway;
+    font-weight: 200;
+    font-size: 1rem;
+}
+
 button, a, input, select {
     font-family: Raleway;
     font-weight: 200;

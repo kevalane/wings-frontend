@@ -3,16 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { DonateComponent } from './donate/donate.component';
 import { ContactComponent } from './contact/contact.component';
-import { TosComponent } from './tos/tos.component';
 
 const routes: Routes = [
   {
     path: '',
     component: DonateComponent
-  },
-  {
-    path: 'tos',
-    component: TosComponent
   },
   {
     path: 'contact',

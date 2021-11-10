@@ -230,7 +230,7 @@ export class DonateComponent implements OnInit {
 
   // Show the optional monthly amount
   public toggleChoose(): void {
-    this.chooseVisible = !this.chooseVisible;
+    this.chooseVisible = true;
     if (this.chooseVisible) {
       this.donateForm.controls.amount.updateValueAndValidity();
     }

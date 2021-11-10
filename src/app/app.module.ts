@@ -10,7 +10,6 @@ import { HomeComponent } from './home/home.component';
 import { DonateComponent } from './donate/donate.component';
 import { ContactComponent } from './contact/contact.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TosComponent } from './tos/tos.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +17,7 @@ import { TosComponent } from './tos/tos.component';
     NavbarComponent,
     HomeComponent,
     DonateComponent,
-    ContactComponent,
-    TosComponent
+    ContactComponent
   ],
   imports: [
     BrowserModule,
