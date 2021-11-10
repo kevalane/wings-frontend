@@ -7,7 +7,7 @@ import { TosComponent } from './tos/tos.component';
 
 const routes: Routes = [
   {
-    path: 'donate',
+    path: '',
     component: DonateComponent
   },
   {
@@ -19,7 +19,7 @@ const routes: Routes = [
     component: ContactComponent
   },
   {
-    path: '',
+    path: 'home',
     component: HomeComponent
   },
   { path: 'cancel', loadChildren: () => import('./cancel/cancel.module').then(m => m.CancelModule) }
