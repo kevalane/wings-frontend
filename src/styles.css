@@ -19,17 +19,55 @@
     font-weight: 200;
     font-style: normal;
 }
+
+@font-face {
+    font-family: Raleway;
+    src: url('assets/fonts/raleway.ttf') format('truetype');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Raleway;
+    src: url('assets/fonts/raleway-light.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 200;
+}
+
+@font-face {
+    font-family: Raleway;
+    src: url('assets/fonts/Raleway-Bold.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: Raleway;
+    src: url('assets/fonts/raleway-italic.ttf') format('truetype');
+    font-style: italic;
+}
+
 /* END FONTS */
 
 /* MAIN TEXT STYLES */
 p {
-    font-family: FuturaPT;
+    font-family: Raleway;
     font-weight: 200;
-    font-size: 1.2em;
+    font-size: 1rem;
 }
 
-h1, h2, h3, h4, h5 {
-    font-family: FuturaPT;
+button, a, input, select {
+    font-family: Raleway;
+    font-weight: 200;
+    font-size: 1rem;
+}
+
+h1, h2 {
+    font-family: Raleway;
+    font-weight: 600;
+}
+
+h3, h4, h5 {
+    font-family: Raleway;
 }
 /* END MAIN TEXT STYLES */
 
