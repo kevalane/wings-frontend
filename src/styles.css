@@ -78,23 +78,6 @@ h1, h2 {
 h3, h4, h5 {
     font-family: Raleway;
 }
-
-.btn-default {
-    border: 2px solid #999 !important;
-    text-transform: uppercase;
-    padding: 1rem 2rem !important;
-    letter-spacing: 2px;
-    font-weight: 600 !important;
-    color: #444 !important;
-    margin-top: 1rem;
-    transition: 0.1s ease-out all;
-}
-
-.btn-default:hover {
-    transform: translateX(.3rem);
-    background: #999;
-    color: #fff !important;
-}
 /* END MAIN TEXT STYLES */
 
 /* TOP LEVEL CSS ELEMENTS */
