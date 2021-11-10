@@ -223,6 +223,9 @@ export class DonateComponent implements OnInit {
   // Change the amount to donate manually
   public changeAmount(amount: number): void {
     this.donateForm.controls['amount'].setValue(amount);
+    if (this.chooseVisible) {
+      this.chooseVisible = false;
+    }
   }
 
   // Show the optional monthly amount

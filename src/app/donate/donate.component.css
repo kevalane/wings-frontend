@@ -28,22 +28,19 @@
 
 .amountButton {
     padding: .7rem 1rem;
-    /* margin-right: 1em; */
     width: 20%;
     margin-right: 6.66%;
-    margin-top: 2em;
+    margin-top: .75rem;
     border: 1px solid #b1b1b1;
-    transition: transform 0.1s;
-    transform: scale(1.0)
+    transition: transform .1s ease-out;
 }
 
 .amountButton:hover {
-    transform: scale(1.1);
+    transform: translateY(-.2rem);
 }
 
 .amountButton:active {
-    /* transform: scale(1.0); */
-    transform: translateY(.2rem) scale(1.08);
+    transform: translateY(0);
 }
 
 .input {
