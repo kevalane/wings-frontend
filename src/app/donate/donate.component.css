@@ -19,10 +19,13 @@
     min-width: 100px;
     padding: .7rem 1rem;
 }
+
 #autogiro {
     text-align: center;
     padding-top: 1em;
     padding-bottom: .5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 .amountButton {

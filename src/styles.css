@@ -42,6 +42,13 @@
 
 @font-face {
     font-family: Raleway;
+    src: url('assets/fonts/Raleway-ExtraBold.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 800;
+}
+
+@font-face {
+    font-family: Raleway;
     src: url('assets/fonts/raleway-italic.ttf') format('truetype');
     font-style: italic;
 }
@@ -63,7 +70,9 @@ button, a, input, select {
 
 h1, h2 {
     font-family: Raleway;
-    font-weight: 600;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 h3, h4, h5 {
