@@ -21,9 +21,10 @@
                         <br>
                         <label>Valfritt månadsbelopp (SEK):</label>
                         <input type="number" class="form-control numberInput" formControlName="amount" placeholder="0"
-                               [ngClass]="{'is-invalid': submitted && f.amount.errors}">
-                        <div *ngIf="submitted && f.amount.errors" class="invalid-feedback">
-                            <div *ngIf="f.amount.errors.required">Du måste fylla i ditt valfria belopp.</div>
+                        [ngClass]="{'is-invalid': (f.amount.errors && f.amount.errors!.min != null) || (submitted && f.amount.errors)}">
+                               <!-- TODO SHOW ERROR LABEL WHEN INSERT 23 SEK IMMEDIATELY -->
+                        <div *ngIf="f.amount.errors" class="invalid-feedback">
+                            <div *ngIf="f.amount.errors.required && submitted">Du måste fylla i ditt valfria belopp.</div>
                             <div *ngIf="f.amount.errors.min">Minsta månadsbelopp är 50 SEK.</div>
                         </div>
                     </div>
