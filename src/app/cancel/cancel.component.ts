@@ -13,16 +13,21 @@ export class CancelComponent implements OnInit {
   private cancelSub: Subscription | undefined;
   public cancelForm: FormGroup;
   public submitted: boolean;
+  public loading: boolean;
+  public message: string;
+  public success: boolean;
 
-  constructor(private http: HttpService,
-              private formBuilder: FormBuilder) {
-                this.cancelForm = this.formBuilder.group({
-                  email: ['', Validators.required],
-                  ssn: ['', [Validators.required, Validators.minLength(12), Validators.maxLength(13)]]
-                });
+  constructor(private http: HttpService, private formBuilder: FormBuilder) {
+    this.cancelForm = this.formBuilder.group({
+      email: ['', Validators.required],
+      ssn: ['', [Validators.required, Validators.minLength(12), Validators.maxLength(13)]]
+    });
 
-                this.submitted = false;
-              }
+    this.submitted = false;
+    this.loading = false;
+    this.message = "";
+    this.success = false;
+  }
 
   ngOnInit(): void {
   }
@@ -39,10 +44,30 @@ export class CancelComponent implements OnInit {
 
   public submit(): void {
     this.submitted = true;
+    this.loading = true;
+    if (this.cancelForm.invalid) {
+      this.loading = false;
+      return;
+    }
+
     this.cancelSub = this.http.cancelAutogiro("kevin.rasmusson@hotmail.com").subscribe(data => {
-      console.log(data);
+      if (data['success']) {
+        this.loading = false;
+        this.success = true;
+        this.message = data['msg'];
+      } else if (data['err']) {
+        this.loading = false;
+        this.success = false;
+        this.message = data['err'];
+      } else {
+        this.loading = false;
+        this.success = false;
+        this.message = "Ett okänt fel inträffade. Vänligen kontakta oss.";
+      }
     }, err => {
-      console.log(err);
+      this.loading = false;
+      this.success = false;
+      this.message = "Ett fel inträffade vid kommunikation med vår server.";
     })
   }
 

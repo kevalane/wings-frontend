@@ -20,7 +20,10 @@
                     <div *ngIf="f.ssn.errors?.maxlength">Personnummer måste vara 12 siffror, format ÅÅÅÅMMDD-XXXX.</div>
                     <div *ngIf="f.ssn.errors.pattern">Personnumret skall endast bestå av siffror.</div>
                 </div>
-                <button class="btn btn-primary submitButton">Avsluta Autogiro</button>
+                <button class="btn btn-primary submitButton">Avsluta Autogiro <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+                <br><br>
+                <div class="alert alert-danger" *ngIf="success == false && message">{{message}}</div>
+                <div class="alert alert-success" *ngIf="success == true && message">{{message}}</div>
             </form>
         </div><!-- ./Col -->
     </div><!-- ./Row -->
