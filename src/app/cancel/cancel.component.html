@@ -1,15 +1,29 @@
-<div class="container">
+<div class="container" id="cancelWrap">
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4 col-xxl-4 offset-md-2 offset-lg-3 offset-xl-4 offset-xxl-4">
             <h2 id="cancelTitle">Säg upp autogiro</h2>
-            <p>Här kan du säga upp ditt autogiro. Allt vi behöver är din email:</p>
+            <p>Här kan du säga upp ditt autogiro. Allt vi behöver är din email och ditt personnummer:</p>
             <form id="cancelForm" [formGroup]="cancelForm" (ngSubmit)="submit()">
+                <label for="email">Email:</label>
                 <input type="text" class="form-control" formControlName="email" id="email" 
                        placeholder="namn@exempel.com" [ngClass]="{'is-invalid': submitted && f.email.errors}">
                 <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                     <div *ngIf="f.email.errors.required">Du måste fylla i din email.</div>
                 </div><!-- ./Error -->
-                <button class="btn btn-primary submitButton">Avsluta Autogiro</button>
+                <br>
+                <label for="ssn">Personnummer:</label>
+                <input type="text" class="form-control" formControlName="ssn" id="ssn"
+                       placeholder="ÅÅÅÅMMDDXXXX" [ngClass]="{'is-invalid': submitted && f.ssn.errors}">
+                <div *ngIf="submitted && f.ssn.errors" class="invalid-feedback">
+                    <div *ngIf="f.ssn.errors.required">Du måste fylla i ditt personnummer.</div>
+                    <div *ngIf="f.ssn.errors?.minlength">Personnummer måste vara 12 siffror, format ÅÅÅÅMMDD-XXXX.</div>
+                    <div *ngIf="f.ssn.errors?.maxlength">Personnummer måste vara 12 siffror, format ÅÅÅÅMMDD-XXXX.</div>
+                    <div *ngIf="f.ssn.errors.pattern">Personnumret skall endast bestå av siffror.</div>
+                </div>
+                <button class="btn btn-primary submitButton">Avsluta Autogiro <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+                <br><br>
+                <div class="alert alert-danger" *ngIf="success == false && message">{{message}}</div>
+                <div class="alert alert-success" *ngIf="success == true && message">{{message}}</div>
             </form>
         </div><!-- ./Col -->
     </div><!-- ./Row -->

@@ -1,3 +1,7 @@
+#cancelWrap {
+    padding-bottom: 18rem;
+}
+
 #cancelTitle { 
     margin-top: 5rem;
     text-align: center;
@@ -10,5 +14,10 @@
     margin-left: auto;
     margin-right: auto;
     display: block;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
+    padding: .7rem 1rem;
+}
+
+input {
+    padding: .7rem 1rem;
 }

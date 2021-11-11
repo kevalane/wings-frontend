@@ -47,8 +47,8 @@ export class HttpService {
   }
 
   // Test route for cancel
-  public cancelAutogiro(_email: string): Observable<any> {
-    return this.http.post<any>(this.configUrl + this.cancelUrl + 'cancelAutogiro', {email: _email}, httpOptions).pipe(
+  public cancelAutogiro(_email: string, _ssn: string): Observable<any> {
+    return this.http.post<any>(this.configUrl + this.cancelUrl + 'cancelAutogiro', {email: _email, ssn: _ssn}, httpOptions).pipe(
       catchError(this.handleError)
     )
   }
