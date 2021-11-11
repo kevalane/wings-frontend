@@ -17,7 +17,8 @@ export class CancelComponent implements OnInit {
   constructor(private http: HttpService,
               private formBuilder: FormBuilder) {
                 this.cancelForm = this.formBuilder.group({
-                  email: ['', Validators.required]
+                  email: ['', Validators.required],
+                  ssn: ['', [Validators.required, Validators.minLength(12), Validators.maxLength(13)]]
                 });
 
                 this.submitted = false;
