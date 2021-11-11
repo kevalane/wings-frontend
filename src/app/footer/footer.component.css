@@ -6,6 +6,7 @@
 }
 
 #copy {
+    margin-top: 1rem;
     font-weight: 300;
     font-size: 80%;
     text-align: center;
@@ -15,7 +16,9 @@
 
 /* Footer nav native */
 #footernav {
+    padding-top: 1rem;
     padding-inline-start: 0;
+    /* text-transform: uppercase; */
 }
 
 #footernav > li  {
@@ -24,15 +27,13 @@
 }
 
 #footernav > li > a {
-    padding-right: 2em;
-    border-right: 1px solid #000;
-    color: #6c757d;
-    text-decoration: none !important;
+    padding-right: 1rem;
+    color: #333;
+    text-decoration: none;
 }
 
 #footernav > li > a:hover {
     color: #000;
-    text-decoration: none;
 }
 
 /* Footer nav mobile */
@@ -47,11 +48,10 @@
 }
 
 #footernavMobile > li > a {
-    color: #6c757d;
-    text-decoration: none !important;
+    text-decoration: none;
+    color: #333;
 }
 
 #footernavMobile > li > a:hover {
     color: #000;
-    text-decoration: none;
 }
