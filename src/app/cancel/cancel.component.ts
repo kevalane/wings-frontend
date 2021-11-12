@@ -59,6 +59,7 @@ export class CancelComponent implements OnInit {
       if (data['success']) {
         this.loading = false;
         this.success = true;
+        this.message = 'Vi lyckades hitta följande autogiro, avsluta de/den du vill:'
         this.autogiros = data['users'];
       } else if (data['err']) {
         this.loading = false;
