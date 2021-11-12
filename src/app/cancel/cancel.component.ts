@@ -11,6 +11,7 @@ import { HttpService } from '../http.service';
 export class CancelComponent implements OnInit {
 
   private cancelSub: Subscription | undefined;
+  private cancelSpecificSub: Subscription | undefined;
   public cancelForm: FormGroup;
   public submitted: boolean;
   public loading: boolean;
@@ -42,6 +43,9 @@ export class CancelComponent implements OnInit {
   ngOnDestroy(): void {
     if (this.cancelSub) {
       this.cancelSub.unsubscribe();
+    }
+    if (this.cancelSpecificSub) {
+      this.cancelSpecificSub.unsubscribe();
     }
   }
 
@@ -86,5 +90,12 @@ export class CancelComponent implements OnInit {
   public cancelSpecific(index: number): void {
     this.selectedIndex = index;
     this.loadingStart = true;
+
+    this.cancelSpecificSub = this.http.cancelSpecific(this.f.email.value, this.f.ssn.value, this.autogiros[index]['public_id'])
+      .subscribe(data => {
+        console.log(data);
+      }, err => {
+        console.log(err);
+      });
   }
 }
