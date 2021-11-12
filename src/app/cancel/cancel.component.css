@@ -21,3 +21,11 @@
 input {
     padding: .7rem 1rem;
 }
+
+table {
+    text-align: center;
+}
+
+tbody > tr > th {
+    font-weight: 200 !important;
+}

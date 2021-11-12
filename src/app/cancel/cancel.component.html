@@ -25,6 +25,29 @@
                 <div class="alert alert-danger" *ngIf="success == false && message">{{message}}</div>
                 <div class="alert alert-success" *ngIf="success == true && message">{{message}}</div>
             </form>
+            <table class="table table-striped" *ngIf="autogiros">
+                <thead>
+                  <tr>
+                    <th scope="col">Clearingnr</th>
+                    <th scope="col">Kontonr</th>
+                    <th scope="col">Kontonamn</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Avsluta</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let autogiro of autogiros; let i = index;">
+                        <th>{{autogiro.clearingNumber}}</th>
+                        <th>{{autogiro.accountNumber}}</th>
+                        <th>{{autogiro.name}}</th>
+                        <th>{{autogiro.amount}} SEK</th>
+                        <!-- <th><button class="btn btn-primary" (click)="startAutogiro(account.ClearingNo, account.AccountNo, account.HolderName, i)" [disabled]="disabledAcc">Använd -->
+                            <th><button class="btn btn-primary">Avsluta
+                            <!-- <span *ngIf="loadingStart && i == selectedIndex" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> -->
+                        </button></th>
+                    </tr>
+                </tbody>
+              </table>
         </div><!-- ./Col -->
     </div><!-- ./Row -->
 </div><!-- ./Container -->

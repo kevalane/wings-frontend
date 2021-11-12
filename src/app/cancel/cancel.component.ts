@@ -16,6 +16,7 @@ export class CancelComponent implements OnInit {
   public loading: boolean;
   public message: string;
   public success: boolean;
+  public autogiros: any;
 
   constructor(private http: HttpService, private formBuilder: FormBuilder) {
     this.cancelForm = this.formBuilder.group({
@@ -54,10 +55,11 @@ export class CancelComponent implements OnInit {
       this.f.email.value,
       this.f.ssn.value
     ).subscribe(data => {
+      console.log(data);
       if (data['success']) {
         this.loading = false;
         this.success = true;
-        this.message = data['msg'];
+        this.autogiros = data['users'];
       } else if (data['err']) {
         this.loading = false;
         this.success = false;
@@ -71,7 +73,9 @@ export class CancelComponent implements OnInit {
       this.loading = false;
       this.success = false;
       this.message = "Ett fel inträffade vid kommunikation med vår server.";
-    })
+    });
   }
+
+
 
 }
