@@ -18,6 +18,10 @@ export class CancelComponent implements OnInit {
   public success: boolean;
   public autogiros: any;
 
+  // Cancel specific
+  public loadingStart: boolean;
+  public selectedIndex: number;
+
   constructor(private http: HttpService, private formBuilder: FormBuilder) {
     this.cancelForm = this.formBuilder.group({
       email: ['', Validators.required],
@@ -28,6 +32,8 @@ export class CancelComponent implements OnInit {
     this.loading = false;
     this.message = "";
     this.success = false;
+    this.loadingStart = false;
+    this.selectedIndex = 0;
   }
 
   ngOnInit(): void {
@@ -77,6 +83,8 @@ export class CancelComponent implements OnInit {
     });
   }
 
-
-
+  public cancelSpecific(index: number): void {
+    this.selectedIndex = index;
+    this.loadingStart = true;
+  }
 }
