@@ -48,6 +48,8 @@
                     </tr>
                 </tbody>
               </table>
+              <div class="alert alert-danger" *ngIf="successStart == false && messageStart">{{messageStart}}</div>
+            <div class="alert alert-success" *ngIf="successStart == true && messageStart">{{messageStart}}</div>
         </div><!-- ./Col -->
     </div><!-- ./Row -->
 </div><!-- ./Container -->

@@ -22,6 +22,8 @@ export class CancelComponent implements OnInit {
   // Cancel specific
   public loadingStart: boolean;
   public selectedIndex: number;
+  public successStart: boolean;
+  public messageStart: string;
 
   constructor(private http: HttpService, private formBuilder: FormBuilder) {
     this.cancelForm = this.formBuilder.group({
@@ -35,6 +37,8 @@ export class CancelComponent implements OnInit {
     this.success = false;
     this.loadingStart = false;
     this.selectedIndex = 0;
+    this.successStart = false;
+    this.messageStart = '';
   }
 
   ngOnInit(): void {
@@ -69,7 +73,7 @@ export class CancelComponent implements OnInit {
       if (data['success']) {
         this.loading = false;
         this.success = true;
-        this.message = 'Vi lyckades hitta följande autogiro, avsluta de/den du vill:'
+        this.message = 'Vi lyckades hitta följande autogiro, avsluta de du vill:'
         this.autogiros = data['users'];
       } else if (data['err']) {
         this.loading = false;
@@ -90,12 +94,29 @@ export class CancelComponent implements OnInit {
   public cancelSpecific(index: number): void {
     this.selectedIndex = index;
     this.loadingStart = true;
+    this.messageStart = '';
+    this.successStart = false;
 
     this.cancelSpecificSub = this.http.cancelSpecific(this.f.email.value, this.f.ssn.value, this.autogiros[index]['public_id'])
       .subscribe(data => {
-        console.log(data);
+        if (data['success']) {
+          this.loadingStart = false;
+          this.successStart = true;
+          this.messageStart = data['msg'];
+          this.autogiros.pop(this.selectedIndex);
+        } else if (data['err']) {
+          this.loadingStart = false;
+          this.successStart = false;
+          this.messageStart = data['err'];
+        } else {
+          this.loadingStart = false;
+          this.successStart = false;
+          this.messageStart = 'Ett okänt fel inträffade.';
+        }
       }, err => {
-        console.log(err);
+        this.loadingStart = false;
+        this.successStart = false;
+        this.messageStart = err;
       });
   }
 }
