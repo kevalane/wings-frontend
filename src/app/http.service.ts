@@ -70,7 +70,7 @@ export class HttpService {
     } else {
       console.log(error.error);
       return throwError(
-        'Back-end returned code (' + error.status + ') with message: ' + error.error.err
+        error.error.err
       )
     }
   }

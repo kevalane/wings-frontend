@@ -65,6 +65,8 @@ export class CancelComponent implements OnInit {
       return;
     }
 
+    console.log(this.f.ssn.value);console.log(this.f.email.value);
+
     this.cancelSub = this.http.cancelAutogiro(
       this.f.email.value,
       this.f.ssn.value
@@ -87,7 +89,7 @@ export class CancelComponent implements OnInit {
     }, err => {
       this.loading = false;
       this.success = false;
-      this.message = "Ett fel inträffade vid kommunikation med vår server.";
+      this.message = err;
     });
   }
 
