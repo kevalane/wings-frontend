@@ -217,6 +217,11 @@ export class DonateComponent implements OnInit {
         this.autogiroSuccess = false;
         this.autogiroMessage = 'Ett okänt fel inträffande när vi skulle registrera dig som månadsgivare. Vänligen kontakta oss så löser vi detta.';
       }
+    }, err => {
+      this.loadingStart = false;
+      this.disabledAcc = false;
+      this.autogiroSuccess = false;
+      this.autogiroMessage = err;
     });
   }
 
