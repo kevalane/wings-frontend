@@ -117,7 +117,6 @@ export class DonateComponent implements OnInit {
       return;
     }
 
-    console.log(this.donateForm.controls['amount'].value);
     // Let's send it to http
     this.donateSub = this.http.getBankInfo(
       this.donateForm.controls['amount'].value, 
@@ -144,9 +143,7 @@ export class DonateComponent implements OnInit {
   }
 
   private poll(publicId: string): void {
-    console.log('CALLED');
     this.pollSub = this.http.pollBankInfo(publicId).subscribe(data => {
-      console.log(data);
       this.loadingBankid = false;
       if (data['qr'] && data['status'] == 'Waiting') {
         // Recursive call WITH QR

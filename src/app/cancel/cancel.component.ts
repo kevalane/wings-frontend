@@ -65,13 +65,10 @@ export class CancelComponent implements OnInit {
       return;
     }
 
-    console.log(this.f.ssn.value);console.log(this.f.email.value);
-
     this.cancelSub = this.http.cancelAutogiro(
       this.f.email.value,
       this.f.ssn.value
     ).subscribe(data => {
-      console.log(data);
       if (data['success']) {
         this.loading = false;
         this.success = true;

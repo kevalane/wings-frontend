@@ -68,7 +68,6 @@ export class HttpService {
         'Client error occured.'
       );
     } else {
-      console.log(error.error);
       return throwError(
         error.error.err
       )
