@@ -203,8 +203,11 @@ export class DonateComponent implements OnInit {
       this.disabledAcc = true;
       if (data['success']) {
         this.disabledAcc = true;
-        this.autogiroMessage = 'Registreringen lyckades. Tack för att just Du blivit månadsgivare. Du kan nu stänga sidan.';
+        this.autogiroMessage = 'Registreringen lyckades. Tack för att just Du blivit månadsgivare. Du kommer nu att omdirigeras ...';
         this.autogiroSuccess = true;
+        setTimeout(() => {
+          window.location.href = 'https://wings.se/manadsgivare';
+        }, 5000)
       } else if (data['err']) {
         this.disabledAcc = false;
         this.autogiroMessage = 'Registreringen misslyckades. Försök igen eller kontakta oss så hjälper vi dig!';
