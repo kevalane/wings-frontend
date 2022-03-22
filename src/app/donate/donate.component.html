@@ -85,7 +85,7 @@
                         <div *ngIf="f.bank.errors.required">Du måste fylla i din bank.</div>
                     </div>
                     <br>
-                    <label><input type="checkbox" (change)="onCheckboxChange($event)"> Öppna Mobilt BankID på denna enhet.</label>
+                    <label><input type="checkbox" (change)="onCheckboxChange($event)"> Öppna Mobilt BankID på denna enhet (behöver fyllas i om du använder telefonen där Mobilt BankID är installerat).</label>
                     <br><br>
                     <button action="submit" class="btn btn-primary submitButton" [disabled]="disabled">
                         Hämta kontouppgifter

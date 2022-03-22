@@ -151,21 +151,39 @@ export class DonateComponent implements OnInit {
       this.loadingBankid = false;
       if (data['qr'] && data['status'] == 'Waiting') {
         // Recursive call WITH QR
+
+        // if mobile clicked
+        if (this.openOnMobile) {
+          if (data['token']) {
+            // window.location.href = 'https://app.bankid.com/?autostarttoken=' + data['token'] + '&redirect=https://bidra.wings.se';
+            // window.location.href = 'bankid:///?autostarttoken=' + data['token'] + '&redirect=https://bidra.wings.se';
+            window.open(
+              'https://app.bankid.com/?autostarttoken=' + data['token'] + '&redirect=null',
+              '_blank'
+            );
+          }
+        } else {
+          this.qr = data['qr'];
+        }
+
         this.loadingBankid = true;
-        this.qr = data['qr'];
         this.pollSub.unsubscribe();
         timer(1000).subscribe(x => {
           this.poll(data['publicId']);
         });
       } else if (data['status'] == 'Waiting') {
         // Recursive call WITHOUT QR
-        if (data['token']) {
-          // window.location.href = 'https://app.bankid.com/?autostarttoken=' + data['token'] + '&redirect=https://bidra.wings.se';
-          window.location.href = 'bankid:///?autostarttoken=' + data['token'] + '&redirect=https://bidra.wings.se';
-          // window.open(
-          //   'https://app.bankid.com/?autostarttoken=' + data['token'] + '&redirect=https://bidra.wings.se',
-          //   '_blank'
-          // );
+
+        // if mobile clicked
+        if (this.openOnMobile) {
+          if (data['token']) {
+            // window.location.href = 'https://app.bankid.com/?autostarttoken=' + data['token'] + '&redirect=https://bidra.wings.se';
+            // window.location.href = 'bankid:///?autostarttoken=' + data['token'] + '&redirect=https://bidra.wings.se';
+            window.open(
+              'https://app.bankid.com/?autostarttoken=' + data['token'] + '&redirect=null',
+              '_blank'
+            );
+          }
         }
         this.loadingBankid = true;
         this.pollSub.unsubscribe();
