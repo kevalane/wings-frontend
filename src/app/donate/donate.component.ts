@@ -131,7 +131,12 @@ export class DonateComponent implements OnInit {
         if (data['success']) {
           this.disabled = true;
           this.success = true;
-          this.message = 'Öppna Mobilt BankID och legitimera dig';
+          // this.message = 'Öppna Mobilt BankID och legitimera dig';
+          if (this.openOnMobile) {
+            this.message = 'Vänta på att Mobilt BankID öppnas och legitimera dig sedan.';
+          } else {
+            this.message = 'Scanna QR-koden som kommer snart och legitimera dig.';
+          }
           this.loadingBankid = true;
           // Here we need to start the polling
           this.poll(data['msg']);
