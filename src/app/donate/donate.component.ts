@@ -51,6 +51,7 @@ export class DonateComponent implements OnInit {
   public autogiroMessage: string;
   public disabled: boolean;
   public disabledAcc: boolean;
+  public openOnMobile: boolean;
 
   // Subs
   private donateSub: any;
@@ -82,6 +83,7 @@ export class DonateComponent implements OnInit {
     this.autogiroSuccess = false;
     this.disabled = false;
     this.disabledAcc = false;
+    this.openOnMobile = false;
   }
 
   ngOnInit(): void {
@@ -114,6 +116,8 @@ export class DonateComponent implements OnInit {
 
     if (this.donateForm.invalid) {
       this.loading = false;
+      this.success = false;
+      this.message = 'Samtliga fält måste fyllas i korrekt.';
       return;
     }
 
@@ -155,6 +159,14 @@ export class DonateComponent implements OnInit {
         });
       } else if (data['status'] == 'Waiting') {
         // Recursive call WITHOUT QR
+        if (data['token']) {
+          // window.location.href = 'https://app.bankid.com/?autostarttoken=' + data['token'] + '&redirect=https://bidra.wings.se';
+          window.location.href = 'bankid:///?autostarttoken=' + data['token'] + '&redirect=https://bidra.wings.se';
+          // window.open(
+          //   'https://app.bankid.com/?autostarttoken=' + data['token'] + '&redirect=https://bidra.wings.se',
+          //   '_blank'
+          // );
+        }
         this.loadingBankid = true;
         this.pollSub.unsubscribe();
         timer(1000).subscribe(x => {
@@ -244,6 +256,13 @@ export class DonateComponent implements OnInit {
   // Sanitize
   public sanitize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
+
+  // checkbox
+  public onCheckboxChange(event: any): void {
+    if (event.type == 'change') {
+      this.openOnMobile = !this.openOnMobile;
+    }
   }
 
 }

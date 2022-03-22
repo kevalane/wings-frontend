@@ -84,6 +84,8 @@
                     <div *ngIf="submitted && f.bank.errors" class="invalid-feedback">
                         <div *ngIf="f.bank.errors.required">Du måste fylla i din bank.</div>
                     </div>
+                    <br>
+                    <label><input type="checkbox" (change)="onCheckboxChange($event)"> Öppna Mobilt BankID på denna enhet.</label>
                     <br><br>
                     <button action="submit" class="btn btn-primary submitButton" [disabled]="disabled">
                         Hämta kontouppgifter
