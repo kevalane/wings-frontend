@@ -85,16 +85,18 @@
                         <div *ngIf="f.bank.errors.required">Du måste fylla i din bank.</div>
                     </div>
                     <br>
-                    <button (click)="submit(true)" class="btn btn-secondary submitButton" [disabled]="disabled">Använd Mobilt BankID på annan enhet</button>
+                    <button (click)="submit(true)" class="btn btn-secondary submitButton" [disabled]="disabled">Använd Mobilt BankID på annan enhet
+                        <span *ngIf="loading && !openOnMobile" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    </button>
                     <!-- <label><input type="checkbox" (change)="onCheckboxChange($event)"> Öppna Mobilt BankID på denna enhet (behöver fyllas i om du använder telefonen där Mobilt BankID är installerat).</label> -->
                     <br>
                     <button (click)="submit(false)" class="btn btn-primary submitButton" [disabled]="disabled">
-                        Öppna Mobilt BankID
-                        <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Öppna Mobilt BankID 
+                    <span *ngIf="loading && openOnMobile" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     </button>
                     <br><br>
                     <!-- QR -->
-                    <p *ngIf="qr" class="text-center" @slideInOutAnimation>Psst! Du kan även använda QR-koden, om det behövs:</p>
+                    <p *ngIf="qr && openOnMobile" class="text-center" @slideInOutAnimation>Psst! Du kan även använda QR-koden, om det behövs:</p>
                     <img *ngIf="qr" [src]="sanitize(qr)" id="qr" @slideInOutAnimation>
                     <!-- END QR -->
                     <div class="alert alert-danger" *ngIf="success == false && message">{{message}} <span *ngIf="loadingBankid" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></div>
