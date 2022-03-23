@@ -13,7 +13,7 @@
                 <p>WINGS jobbar med att stärka den mentala hälsan hos ungdomar. Vår vision är att bli rikstäckande inom ämnet.
                 Tillsammans med dig tar vi ett steg närmare den visionen. Tillsammans med dig gör vi skillnad.
                 </p>
-                <form id="donateForm" [formGroup]="donateForm" (ngSubmit)="submit()">
+                <form id="donateForm" [formGroup]="donateForm">
                     <br>
                     <h4>1. Välj månadsbelopp</h4>
                     <div id="buttonList">
@@ -85,10 +85,11 @@
                         <div *ngIf="f.bank.errors.required">Du måste fylla i din bank.</div>
                     </div>
                     <br>
-                    <label><input type="checkbox" (change)="onCheckboxChange($event)"> Öppna Mobilt BankID på denna enhet (behöver fyllas i om du använder telefonen där Mobilt BankID är installerat).</label>
-                    <br><br>
-                    <button action="submit" class="btn btn-primary submitButton" [disabled]="disabled">
-                        Hämta kontouppgifter
+                    <button (click)="submit(true)" class="btn btn-secondary submitButton" [disabled]="disabled">Använd Mobilt BankID på annan enhet</button>
+                    <!-- <label><input type="checkbox" (change)="onCheckboxChange($event)"> Öppna Mobilt BankID på denna enhet (behöver fyllas i om du använder telefonen där Mobilt BankID är installerat).</label> -->
+                    <br>
+                    <button (click)="submit(false)" class="btn btn-primary submitButton" [disabled]="disabled">
+                        Öppna Mobilt BankID
                         <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     </button>
                     <br><br>

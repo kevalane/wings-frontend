@@ -26,8 +26,8 @@ export class HttpService {
   }
 
   // Post the bank info from autogiro form and return the bank info
-  public getBankInfo(_amount: number, _ssn: string, _email: string, _bank: string): Observable<any> {
-    return this.http.post(this.configUrl + this.autogiroUrl + 'getBankInfo', {amount: _amount, ssn: _ssn, email: _email, bank: _bank}, httpOptions).pipe(
+  public getBankInfo(_amount: number, _ssn: string, _email: string, _bank: string, _otherDevice: boolean): Observable<any> {
+    return this.http.post(this.configUrl + this.autogiroUrl + 'getBankInfo', {amount: _amount, ssn: _ssn, email: _email, bank: _bank, otherDevice: _otherDevice}, httpOptions).pipe(
       catchError(this.handleError)
     )
   }

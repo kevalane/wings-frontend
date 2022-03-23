@@ -111,7 +111,13 @@ export class DonateComponent implements OnInit {
   }
 
   // Submit form
-  public submit(): void {
+  public submit(otherDevice: boolean): void {
+    if (otherDevice) {
+      this.openOnMobile = false;
+    } else {
+      this.openOnMobile = true;
+    }
+    
     this.submitted = false;
     this.submitted = true;
     this.loading = true;
@@ -128,7 +134,8 @@ export class DonateComponent implements OnInit {
       this.donateForm.controls['amount'].value, 
       this.donateForm.controls['ssn'].value,
       this.donateForm.controls['email'].value,
-      this.donateForm.controls['bank'].value).subscribe(data => {
+      this.donateForm.controls['bank'].value,
+      otherDevice).subscribe(data => {
         this.loading = false;
         if (data['success']) {
           this.disabled = true;
