@@ -52,6 +52,7 @@ export class DonateComponent implements OnInit {
   public disabled: boolean;
   public disabledAcc: boolean;
   public openOnMobile: boolean;
+  public opened: boolean;
 
   // Subs
   private donateSub: any;
@@ -84,6 +85,7 @@ export class DonateComponent implements OnInit {
     this.disabled = false;
     this.disabledAcc = false;
     this.openOnMobile = false;
+    this.opened = false;
   }
 
   ngOnInit(): void {
@@ -158,14 +160,10 @@ export class DonateComponent implements OnInit {
         // Recursive call WITH QR
 
         // if mobile clicked
-        if (this.openOnMobile) {
-          if (data['token']) {
-            // window.location.href = 'https://app.bankid.com/?autostarttoken=' + data['token'] + '&redirect=https://bidra.wings.se';
-            // window.location.href = 'bankid:///?autostarttoken=' + data['token'] + '&redirect=https://bidra.wings.se';
-            window.open(
-              'https://app.bankid.com/?autostarttoken=' + data['token'] + '&redirect=null',
-              '_blank'
-            );
+        if (this.openOnMobile && !this.opened) {
+          if (data['token'] && !this.opened) {
+            window.location.href = 'bankid:///?autostarttoken=' + data['token'] + '&redirect=null';
+            this.opened = true;
           }
         } else {
           this.qr = data['qr'];
@@ -181,13 +179,9 @@ export class DonateComponent implements OnInit {
 
         // if mobile clicked
         if (this.openOnMobile) {
-          if (data['token']) {
-            // window.location.href = 'https://app.bankid.com/?autostarttoken=' + data['token'] + '&redirect=https://bidra.wings.se';
-            // window.location.href = 'bankid:///?autostarttoken=' + data['token'] + '&redirect=https://bidra.wings.se';
-            window.open(
-              'https://app.bankid.com/?autostarttoken=' + data['token'] + '&redirect=null',
-              '_blank'
-            );
+          if (data['token'] && !this.opened) {
+            window.location.href = 'bankid:///?autostarttoken=' + data['token'] + '&redirect=null';
+            this.opened = true;
           }
         }
         this.loadingBankid = true;
