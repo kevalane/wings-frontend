@@ -51,6 +51,8 @@ export class DonateComponent implements OnInit {
   public autogiroMessage: string;
   public disabled: boolean;
   public disabledAcc: boolean;
+  public openOnMobile: boolean;
+  public opened: boolean;
 
   // Subs
   private donateSub: any;
@@ -82,6 +84,8 @@ export class DonateComponent implements OnInit {
     this.autogiroSuccess = false;
     this.disabled = false;
     this.disabledAcc = false;
+    this.openOnMobile = false;
+    this.opened = false;
   }
 
   ngOnInit(): void {
@@ -107,13 +111,21 @@ export class DonateComponent implements OnInit {
   }
 
   // Submit form
-  public submit(): void {
+  public submit(otherDevice: boolean): void {
+    if (otherDevice) {
+      this.openOnMobile = false;
+    } else {
+      this.openOnMobile = true;
+    }
+    
     this.submitted = false;
     this.submitted = true;
     this.loading = true;
 
     if (this.donateForm.invalid) {
       this.loading = false;
+      this.success = false;
+      this.message = 'Samtliga fält måste fyllas i korrekt.';
       return;
     }
 
@@ -122,12 +134,18 @@ export class DonateComponent implements OnInit {
       this.donateForm.controls['amount'].value, 
       this.donateForm.controls['ssn'].value,
       this.donateForm.controls['email'].value,
-      this.donateForm.controls['bank'].value).subscribe(data => {
+      this.donateForm.controls['bank'].value,
+      otherDevice).subscribe(data => {
         this.loading = false;
         if (data['success']) {
           this.disabled = true;
           this.success = true;
-          this.message = 'Öppna Mobilt BankID och legitimera dig';
+          // this.message = 'Öppna Mobilt BankID och legitimera dig';
+          if (this.openOnMobile) {
+            this.message = 'Vänta på att Mobilt BankID öppnas och legitimera dig sedan.';
+          } else {
+            this.message = 'Scanna QR-koden som kommer snart och legitimera dig.';
+          }
           this.loadingBankid = true;
           // Here we need to start the polling
           this.poll(data['msg']);
@@ -147,14 +165,32 @@ export class DonateComponent implements OnInit {
       this.loadingBankid = false;
       if (data['qr'] && data['status'] == 'Waiting') {
         // Recursive call WITH QR
+
+        // if mobile clicked
+        if (this.openOnMobile && !this.opened) {
+          if (data['token'] && !this.opened) {
+            window.location.href = 'bankid:///?autostarttoken=' + data['token'] + '&redirect=null';
+            this.opened = true;
+          }
+        } else {
+          this.qr = data['qr'];
+        }
+
         this.loadingBankid = true;
-        this.qr = data['qr'];
         this.pollSub.unsubscribe();
         timer(1000).subscribe(x => {
           this.poll(data['publicId']);
         });
       } else if (data['status'] == 'Waiting') {
         // Recursive call WITHOUT QR
+
+        // if mobile clicked
+        if (this.openOnMobile) {
+          if (data['token'] && !this.opened) {
+            window.location.href = 'bankid:///?autostarttoken=' + data['token'] + '&redirect=null';
+            this.opened = true;
+          }
+        }
         this.loadingBankid = true;
         this.pollSub.unsubscribe();
         timer(1000).subscribe(x => {
@@ -244,6 +280,13 @@ export class DonateComponent implements OnInit {
   // Sanitize
   public sanitize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
+
+  // checkbox
+  public onCheckboxChange(event: any): void {
+    if (event.type == 'change') {
+      this.openOnMobile = !this.openOnMobile;
+    }
   }
 
 }

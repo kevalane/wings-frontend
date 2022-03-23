@@ -63,7 +63,7 @@ label {
 }
 
 .submitButton {
-    /* width: 100%; */
+    width: 70%;
     /* max-width: 400px; */
     padding: .7rem 2rem;
     display: block;
